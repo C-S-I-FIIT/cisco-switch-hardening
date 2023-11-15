@@ -1,5 +1,3 @@
-Certainly! Below is the Cisco Catalyst 9200/9300 Device Hardening Guide with detailed configurations and descriptions:
-
 # Cisco Catalyst 9200/9300 Device Hardening Guide
 
 ## Step 1: Secure Device Access
@@ -12,12 +10,11 @@ Certainly! Below is the Cisco Catalyst 9200/9300 Device Hardening Guide with det
 
 ```bash
 Switch(config)# line console 0
-Switch(config-line)# password <console_password>
-Switch(config-line)# login
+Switch(config-line)# login local
 
+Switch(config)# username admin privilege 15 algorithm-type scrypt secret <very_strong_password>
 Switch(config)# line vty 0 15
-Switch(config-line)# password <vty_password>
-Switch(config-line)# login
+Switch(config-line)# login local
 
 Switch(config)# enable secret <enable_password>
 ```
@@ -29,7 +26,7 @@ Switch(config)# enable secret <enable_password>
 **Consequences of Not Hardening:** Using unencrypted protocols like Telnet increases the likelihood of unauthorized individuals intercepting sensitive information, potentially leading to security breaches.
 
 ```bash
-Switch(config)# crypto key generate rsa general-keys modulus 2048
+Switch(config)# crypto key generate rsa general-keys modulus 4096
 Switch(config)# line vty 0 15
 Switch(config-line)# transport input ssh
 ```
